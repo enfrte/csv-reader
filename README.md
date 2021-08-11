@@ -13,12 +13,13 @@ Example data
 
 Usage example
 
-	$foo = new CSVReader('database.csv', ',');
-	$foo->setTable('details', 2)
-		->setTableColumns(['title' => 2])
-		->setTable('car_data', 3, $foo->theEnd())
+	<?php 
+	$my_database = new CSVReader('database.csv', ','); // Load the DB and set the delimiter
+	$my_database->setTable('details', 2) // Give a name to your table and specify the line in the CSV file where the data begings and ends. 
+		->setTableColumns(['title' => 2]) // Give a name to your column and number where the data is.
+		->setTable('car_data', 3, $my_database->theLastLine()) // Optionally add more tables and columns. 
 		->setTableColumns([
-			"Year" => 1, 
+			"Year" => 1, // First row (No zero indexing)
 			"Make" => 2, 
 			"Model" => 3, 
 			"Description" => 4, 
@@ -27,9 +28,10 @@ Usage example
 
 	// Query the CSV file
 	echo '<pre>';
-	print_r($foo);
-	$bar = $foo->queryTable('details', ['title']);
-	$bar = $foo->queryTable('car_data', ['Year', 'Price']);
+	print_r($my_database);
+	$bar = $my_database->queryTable('details', ['title']);
+	$baz = $my_database->queryTable('car_data', ['Year', 'Price']); // Select the first and last columns from the car_data table
+	?>
 
 ### To-do
 
